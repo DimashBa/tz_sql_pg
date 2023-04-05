@@ -91,12 +91,12 @@ group by d.department_id;
 
 ### Решение:
 ```sql
-select p.position_title, avg(jh.amount),
+select p.position_title as "Должность", avg(jh.amount) as "Средняя ЗП по должности",
 	case
 		when avg(jh.amount)>97000 then 'Да'
 		else 'Нет'
 	end 
-  as moreThanAvg
+  as "Больше ли общей средней ЗП"
 from job_history jh
 inner join positions p on jh.position_id = p.position_id
 group by p.position_title;
@@ -104,8 +104,8 @@ group by p.position_title;
 
 ### Результат:
 
-|position_title|avg|morethanavg|
-|--------------|---|-----------|
+|Должность|Средняя ЗП по должности|Больше ли общей средней ЗП|
+|---------|-----------------------|--------------------------|
 |Менеджер|75000|Нет|
 |Дизайнер|110000|Да|
 
