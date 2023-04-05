@@ -116,8 +116,8 @@ group by p.position_title;
 ```sql
 CREATE VIEW positions_data as
 SELECT 
-    p.position_title AS "Должность",
-    jsonb_agg(json_build_array(d.departments_name))  as jt
+    p.position_title as "Должность",
+    jsonb_agg(json_build_array(d.departments_name))  as "Отделы"
 FROM job_history jh
 INNER JOIN positions p ON jh.position_id = p.position_id
 INNER JOIN employees e ON jh.employee_id = e.employee_id
@@ -130,7 +130,8 @@ select * from positions_data pd
 
 ### Результат:
 
-|Должность|jt|
-|---------|--|
+|Должность|Отделы|
+|---------|------|
 |Менеджер|[["Снабжение"], ["Логистика"], ["Снабжение"]]|
 |Дизайнер|[["Разработка"]]|
+
