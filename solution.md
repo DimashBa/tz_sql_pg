@@ -53,6 +53,7 @@ INSERT INTO public.job_history (employee_id, department_id, position_id, amount,
 
 ## Задачи и решения
 ### 1)	Сделать выборку всех работников с именем “Давид” из отдела “Снабжение” с полями ФИО, заработная плата, должность
+
 ### Решение:
 ```sql
 select e.first_name, e.last_name, p.position_title, jh.amount from job_history jh
@@ -61,7 +62,7 @@ inner join positions p on jh.position_id = p.position_id
 where e.first_name  = 'Давид'
 ```
 
-Результат (фамилию и имя можно объединить):
+### Результат (фамилию и имя можно объединить):
 
 |first_name|last_name|position_title|amount|
 |----------|---------|--------------|------|
@@ -70,6 +71,7 @@ where e.first_name  = 'Давид'
 
 
 ### 2)	Посчитать среднюю заработную плату работников по отделам
+
 ### Решение:
 ```sql
 select p.position_title, avg(jh.amount) from job_history jh
@@ -77,7 +79,7 @@ inner join positions p on jh.position_id = p.position_id
 group by p.position_title;
 ```
 
-Результат:
+### Результат:
 
 |position_title|avg|
 |--------------|---|
@@ -86,6 +88,7 @@ group by p.position_title;
 
 
 ### 3)	Сделать выборку по должностям, в результате которой отобразятся данные, больше ли средняя ЗП по должности, чем средняя ЗП по всем работникам
+
 ### Решение:
 ```sql
 select p.position_title, avg(jh.amount),
@@ -99,7 +102,7 @@ inner join positions p on jh.position_id = p.position_id
 group by p.position_title;
 ```
 
-Результат:
+### Результат:
 
 |position_title|avg|morethanavg|
 |--------------|---|-----------|
@@ -108,6 +111,7 @@ group by p.position_title;
 
 
 ### 4)	Сделать представление, в котором собраны данные по должностям (Должность, в каких отделах встречается эта должность (в виде массива), список сотрудников, начавших работать в этом отделе не раньше 2021 года (Сгруппировать по отделам) (в формате JSON), средняя заработная плата по должности)
+
 ### Решение (частичное):
 ```sql
 CREATE VIEW positions_data as
@@ -124,7 +128,7 @@ GROUP BY p.position_title;
 select * from positions_data pd 
 ```
 
-Результат:
+### Результат:
 
 |Должность|jt|
 |---------|--|
