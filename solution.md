@@ -56,7 +56,7 @@ INSERT INTO public.job_history (employee_id, department_id, position_id, amount,
 
 ### Решение:
 ```sql
-select e.first_name, e.last_name, p.position_title, jh.amount from job_history jh
+select e.first_name || ' ' || e.last_name as "ФИО", p.position_title as "Должность", jh.amount as "Заработная плата" from job_history jh
 inner join employees e on jh.employee_id = e.employee_id  
 inner join positions p on jh.position_id = p.position_id
 where e.first_name  = 'Давид'
@@ -64,28 +64,28 @@ where e.first_name  = 'Давид'
 
 ### Результат (фамилию и имя можно объединить):
 
-|first_name|last_name|position_title|amount|
-|----------|---------|--------------|------|
-|Давид|Манукян|Менеджер|60000|
-|Давид|Микеланджело|Дизайнер|110000|
+|ФИО|Должность|Заработная плата|
+|---|---------|----------------|
+|Давид Манукян|Менеджер|60000|
+|Давид Микеланджело|Дизайнер|110000|
 
 
 ### 2)	Посчитать среднюю заработную плату работников по отделам
 
 ### Решение:
 ```sql
-select p.position_title, avg(jh.amount) from job_history jh
-inner join positions p on jh.position_id = p.position_id
-group by p.position_title;
+select d.departments_name  as "Отдел", avg(jh.amount) as "Средняя заработная плата" from job_history jh
+inner join departments d on jh.department_id = d.department_id 
+group by d.department_id;
 ```
 
 ### Результат:
 
-|position_title|avg|
-|--------------|---|
-|Менеджер|75000|
-|Дизайнер|110000|
-
+|Отдел|Средняя заработная плата|
+|-----|------------------------|
+|Логистика|90000|
+|Разработка|110000|
+|Снабжение|67500|
 
 ### 3)	Сделать выборку по должностям, в результате которой отобразятся данные, больше ли средняя ЗП по должности, чем средняя ЗП по всем работникам
 
